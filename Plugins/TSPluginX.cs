@@ -5,11 +5,9 @@ namespace TS
 {
     public class TSPluginX : TSPlugin
     {
-        private GameObject gameObject;
+        private readonly string PROPERTY_NAME = "X";
 
-        public TSPluginX()
-        {
-        }
+        private GameObject gameObject;
 
         public override object Target
         {
@@ -32,7 +30,6 @@ namespace TS
             }
             set
             {
-                Debug.Log(value.ToString());
                 if (gameObject != null)
                 {
                     gameObject.transform.position = new Vector3(value, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -42,7 +39,7 @@ namespace TS
 
         public override string PropertyName
         {
-            get { return "X"; }
+            get { return PROPERTY_NAME; }
         }
     }
 }
