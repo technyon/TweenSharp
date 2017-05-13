@@ -9,15 +9,11 @@ namespace TS
         private static TSScheduler instance;
 
         private List<TweenSharp> tweens;
+        private List<TweenSharp> removeList;
 
         public static void Register(TweenSharp tweensharp)
         {
             instance.tweens.Add(tweensharp);
-        }
-
-        public static void Unregister(TweenSharp tweensharp)
-        {
-            instance.tweens.Remove(tweensharp);
         }
 
         void Awake()
@@ -27,15 +23,26 @@ namespace TS
                 instance = this;
                 tweens = new List<TweenSharp>();
                 PluginManager.Init();
+                removeList = new List<TweenSharp>();
             }
         }
 
         private void Update()
         {
+            removeList.Clear();
+
             float time = Time.realtimeSinceStartup;
             foreach (TweenSharp tween in tweens)
             {
-                tween.Update(time);
+                if (tween.Update(time))
+                {
+                    removeList.Add(tween);
+                }
+            }
+
+            foreach (TweenSharp tween in removeList)
+            {
+                tweens.Remove(tween);
             }
         }
     }

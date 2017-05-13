@@ -10,10 +10,11 @@ public class TweenSharp
     private object target;
     private float duration;
 
-    private List<string> propertyKeys;
+    private List<string> propertyNames;
     private List<float> propertyStartValues;
     private List<float> propertyTargetValues;
     private List<TSPlugin> propertyPlugins;
+    private List<PropertyInfo> propertyInfos;
 
     private float startTime;
     private TSEase.EaseFunction easeFunction = TSEase.Linear;
@@ -26,15 +27,17 @@ public class TweenSharp
 
         startTime = Time.realtimeSinceStartup;
 
-        propertyKeys = new List<string>();
+        propertyNames = new List<string>();
         propertyStartValues = new List<float>();
         propertyTargetValues = new List<float>();
         propertyPlugins = new List<TSPlugin>();
+        propertyInfos = new List<PropertyInfo>();
 
         foreach (KeyValuePair<string, object> kvp in args)
         {
             string key = kvp.Key;
-            propertyKeys.Add(key);
+            propertyNames.Add(key);
+            propertyInfos.Add(null);
 
             TSPlugin plugin = PluginManager.GetPlugin(key);
             if (plugin != null)
@@ -55,27 +58,28 @@ public class TweenSharp
                 }
                 propertyTargetValues.Add((float) kvp.Value);
             }
+        }
 
-            PropertyInfo[] propertyInfos = target.GetType().GetProperties();
-            foreach (PropertyInfo pi in propertyInfos)
+        PropertyInfo[] pis = target.GetType().GetProperties();
+        foreach (PropertyInfo pi in pis)
+        {
+            int ind = propertyNames.IndexOf(pi.Name);
+            if (ind != -1 && propertyPlugins[ind] == null)
             {
-                int ind = propertyKeys.IndexOf(pi.Name);
-                if (ind != -1 && propertyPlugins[ind] == null)
+                object val = pi.GetValue(target, null);
+                if (val is float)
                 {
-                    object val = pi.GetValue(target, null);
-                    if (val is float)
-                    {
-                        propertyStartValues[ind] = (float) val;
-                    }
+                    propertyStartValues[ind] = (float) val;
                 }
+                propertyInfos[ind] = pi;
             }
         }
         TSScheduler.Register(this);
     }
 
-    public void Update(float time)
+    public bool Update(float time)
     {
-        int len = propertyKeys.Count;
+        int len = propertyNames.Count;
 
         float timePassed = time - startTime;
 
@@ -83,21 +87,27 @@ public class TweenSharp
         {
             for (int i = 0; i < len; i++)
             {
-                string propertyName = propertyKeys[i];
+                string propertyName = propertyNames[i];
                 float startVal = propertyStartValues[i];
                 float targetVal = propertyTargetValues[i];
                 TSPlugin plugin = propertyPlugins[i];
 
 
-                if (plugin != null)
+                if (plugin == null)
+                {
+                    PropertyInfo pi = propertyInfos[i];
+                    pi.SetValue(target, easeFunction(timePassed, startVal, targetVal - startVal, duration), null);
+                }
+                else
                 {
                     plugin.Value = easeFunction(timePassed, startVal, targetVal - startVal, duration);
                 }
             }
+            return false;
         }
         else
         {
-            TSScheduler.Unregister(this);
+            return true;
         }
     }
 }
