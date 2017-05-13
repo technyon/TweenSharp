@@ -16,6 +16,11 @@ namespace TS
             instance.tweens.Add(tweensharp);
         }
 
+        public static void Unregister(TweenSharp tweensharp)
+        {
+            instance.tweens.Remove(tweensharp);
+        }
+
         void Awake()
         {
             if (instance == null)
@@ -26,6 +31,13 @@ namespace TS
             }
         }
 
+        private void Update()
+        {
+            float time = Time.realtimeSinceStartup;
+            foreach (TweenSharp tween in tweens)
+            {
 
+            }
+        }
     }
 }
