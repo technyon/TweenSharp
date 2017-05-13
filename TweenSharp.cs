@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using TS;
 using UnityEngine;
@@ -74,40 +75,57 @@ public class TweenSharp
                 propertyInfos[ind] = pi;
             }
         }
+
+        int len = propertyNames.Count;
+        for (int i = 0; i < len; i++)
+        {
+            if (propertyInfos[i] == null && propertyPlugins[i] == null)
+            {
+                throw new Exception("Tweensharp(): Property " + propertyNames[i] + " not found on object " + target +".");
+            }
+        }
+
+
         TSScheduler.Register(this);
     }
 
     public bool Update(float time)
     {
         int len = propertyNames.Count;
-
         float timePassed = time - startTime;
 
         if (timePassed <= duration)
         {
             for (int i = 0; i < len; i++)
             {
-                string propertyName = propertyNames[i];
-                float startVal = propertyStartValues[i];
-                float targetVal = propertyTargetValues[i];
-                TSPlugin plugin = propertyPlugins[i];
-
-
-                if (plugin == null)
-                {
-                    PropertyInfo pi = propertyInfos[i];
-                    pi.SetValue(target, easeFunction(timePassed, startVal, targetVal - startVal, duration), null);
-                }
-                else
-                {
-                    plugin.Value = easeFunction(timePassed, startVal, targetVal - startVal, duration);
-                }
+                SetValue(i, timePassed);
             }
             return false;
         }
         else
         {
+            for (int i = 0; i < len; i++)
+            {
+                SetValue(i, duration);
+            }
             return true;
+        }
+    }
+
+    private void SetValue(int i, float timePassed)
+    {
+        float startVal = propertyStartValues[i];
+        float targetVal = propertyTargetValues[i];
+        TSPlugin plugin = propertyPlugins[i];
+
+        if (plugin == null)
+        {
+            PropertyInfo pi = propertyInfos[i];
+            pi.SetValue(target, easeFunction(timePassed, startVal, targetVal - startVal, duration), null);
+        }
+        else
+        {
+            plugin.Value = easeFunction(timePassed, startVal, targetVal - startVal, duration);
         }
     }
 }
