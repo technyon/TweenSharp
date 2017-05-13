@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using TS;
-using TS.Plugins;
 using UnityEngine;
 
 public class TweenSharp
@@ -16,11 +15,16 @@ public class TweenSharp
     private List<float> propertyTargetValues;
     private List<TSPlugin> propertyPlugins;
 
+    private float startTime;
+    private TSEase.EaseFunction easeFunction = TSEase.Linear;
+
     public TweenSharp(object target, float duration, Dictionary<string, object> args)
     {
         float f = 0;
         this.target = target;
         this.duration = duration;
+
+        startTime = Time.realtimeSinceStartup;
 
         propertyKeys = new List<string>();
         propertyStartValues = new List<float>();
@@ -67,6 +71,19 @@ public class TweenSharp
 
     public void Update(float time)
     {
+        int len = propertyKeys.Count;
 
+        for (int i = 0; i < len; i++)
+        {
+            string propertyName = propertyKeys[i];
+            float startVal = propertyStartValues[i];
+            float targetVal = propertyTargetValues[i];
+            TSPlugin plugin = propertyPlugins[i];
+
+            if (plugin != null)
+            {
+                plugin.Value = easeFunction(time - startTime,startVal,targetVal - startVal,duration);
+            }
+        }
     }
 }

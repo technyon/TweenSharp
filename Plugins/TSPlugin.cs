@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace TS.Plugins
+namespace TS
 {
     public class TSPlugin
     {

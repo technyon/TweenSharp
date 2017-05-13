@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework.Constraints;
 using UnityEngine;
 
-namespace TS.Plugins
+namespace TS
 {
     public class TSPluginX : TSPlugin
     {

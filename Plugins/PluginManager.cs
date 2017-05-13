@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TS.Plugins
+namespace TS
 {
     public class PluginManager
     {
