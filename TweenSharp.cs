@@ -37,6 +37,10 @@ public class TweenSharp
             propertyKeys.Add(key);
 
             TSPlugin plugin = PluginManager.GetPlugin(key);
+            if (plugin != null)
+            {
+                plugin.Target = target;
+            }
             propertyPlugins.Add(plugin);
 
             if (kvp.Value is float)
@@ -73,17 +77,27 @@ public class TweenSharp
     {
         int len = propertyKeys.Count;
 
-        for (int i = 0; i < len; i++)
-        {
-            string propertyName = propertyKeys[i];
-            float startVal = propertyStartValues[i];
-            float targetVal = propertyTargetValues[i];
-            TSPlugin plugin = propertyPlugins[i];
+        float timePassed = time - startTime;
 
-            if (plugin != null)
+        if (timePassed <= duration)
+        {
+            for (int i = 0; i < len; i++)
             {
-                plugin.Value = easeFunction(time - startTime,startVal,targetVal - startVal,duration);
+                string propertyName = propertyKeys[i];
+                float startVal = propertyStartValues[i];
+                float targetVal = propertyTargetValues[i];
+                TSPlugin plugin = propertyPlugins[i];
+
+
+                if (plugin != null)
+                {
+                    plugin.Value = easeFunction(timePassed, startVal, targetVal - startVal, duration);
+                }
             }
+        }
+        else
+        {
+            TSScheduler.Unregister(this);
         }
     }
 }

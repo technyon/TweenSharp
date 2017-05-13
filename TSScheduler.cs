@@ -35,7 +35,7 @@ namespace TS
             float time = Time.realtimeSinceStartup;
             foreach (TweenSharp tween in tweens)
             {
-
+                tween.Update(time);
             }
         }
     }

@@ -32,6 +32,7 @@ namespace TS
             }
             set
             {
+                Debug.Log(value.ToString());
                 if (gameObject != null)
                 {
                     gameObject.transform.position = new Vector3(value, gameObject.transform.position.y, gameObject.transform.position.z);
