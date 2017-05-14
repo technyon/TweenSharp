@@ -1,38 +1,28 @@
-﻿using NUnit.Framework.Constraints;
+﻿using System;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace TS
 {
-    public class TSPluginX : TSPlugin
+    public class TSPluginX : TSTransformPlugin
     {
         private readonly string PROPERTY_NAME = "X";
-
-        private GameObject gameObject;
-
-        public override object Target
-        {
-            set
-            {
-                gameObject = value as GameObject;
-                base.Target = value;
-            }
-        }
 
         public override float Value
         {
             get
             {
-                if (gameObject != null)
+                if (transform != null)
                 {
-                    return gameObject.transform.position.x;
+                    return transform.position.x;
                 }
                 return 0;
             }
             set
             {
-                if (gameObject != null)
+                if (transform != null)
                 {
-                    gameObject.transform.position = new Vector3(value, gameObject.transform.position.y, gameObject.transform.position.z);
+                    transform.position = new Vector3(value, transform.position.y, transform.position.z);
                 }
             }
         }

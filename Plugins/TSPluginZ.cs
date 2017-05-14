@@ -3,36 +3,25 @@ using UnityEngine;
 
 namespace TS
 {
-    public class TSPluginZ : TSPlugin
+    public class TSPluginZ : TSTransformPlugin
     {
         private readonly string PROPERTY_NAME = "Z";
-
-        private GameObject gameObject;
-
-        public override object Target
-        {
-            set
-            {
-                gameObject = value as GameObject;
-                base.Target = value;
-            }
-        }
 
         public override float Value
         {
             get
             {
-                if (gameObject != null)
+                if (transform != null)
                 {
-                    return gameObject.transform.position.z;
+                    return transform.position.z;
                 }
                 return 0;
             }
             set
             {
-                if (gameObject != null)
+                if (transform != null)
                 {
-                    gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, value);
+                    transform.position = new Vector3(transform.position.x, transform.position.y, value);
                 }
             }
         }
