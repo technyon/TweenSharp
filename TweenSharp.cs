@@ -22,8 +22,8 @@ public class TweenSharp
 
     public float delay = 0;
     public int overwrite = 0;
-    private Action onComplete = null;
-    private Action onCompleteObj = null;
+    public Action onComplete = null;
+    public Action<object> onCompleteArg = null;
     public object onCompleteParams = null;
 /*
         , onCompleteScope:1,
@@ -113,7 +113,7 @@ public class TweenSharp
         int len = propertyNames.Count;
         float timePassed = time - startTime;
 
-        if (timePassed <= duration)
+        if (timePassed < duration)
         {
             for (int i = 0; i < len; i++)
             {

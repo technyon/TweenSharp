@@ -45,6 +45,16 @@ namespace TS
             foreach (TweenSharp tween in removeList)
             {
                 tweens.Remove(tween);
+
+                if (tween.onComplete != null)
+                {
+                    tween.onComplete();
+                }
+                if (tween.onCompleteArg != null)
+                {
+                    tween.onCompleteArg(tween.onCompleteParams);
+                }
+
             }
         }
     }

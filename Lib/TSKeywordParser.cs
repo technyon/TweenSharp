@@ -15,6 +15,8 @@ namespace TS
             keywordTable = new Dictionary<string, Action<TweenSharp, object>>();
             keywordFunctions = new TSKeywordFunctions();
             keywordTable["delay"] = keywordFunctions.Delay;
+            keywordTable["onComplete"] = keywordFunctions.OnComplete;
+            keywordTable["onCompleteParams"] = keywordFunctions.OnCompleteParams;
         }
 
 
