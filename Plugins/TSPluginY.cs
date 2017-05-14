@@ -1,4 +1,5 @@
-﻿using NUnit.Framework.Constraints;
+﻿using System;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace TS
@@ -7,23 +8,21 @@ namespace TS
     {
         private readonly string PROPERTY_NAME = "y";
 
-        public override float Value
+        protected override float GetValTransform()
         {
-            get
-            {
-                if (transform != null)
-                {
-                    return transform.position.y;
-                }
-                return 0;
-            }
-            set
-            {
-                if (transform != null)
-                {
-                    transform.position = new Vector3(transform.position.x, value, transform.position.z);
-                }
-            }
+            return transform.position.y;
+        }
+        protected override void SetValTransform(float value)
+        {
+            transform.position = new Vector3(transform.position.x, value, transform.position.z);
+        }
+        protected override float GetValRectTransform()
+        {
+            return rectTransform.anchoredPosition.y;
+        }
+        protected override void SetValRectTransform(float value)
+        {
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, value);
         }
 
         public override string PropertyName

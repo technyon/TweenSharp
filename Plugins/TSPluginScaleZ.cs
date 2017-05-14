@@ -1,6 +1,4 @@
-﻿using System;
-using NUnit.Framework.Constraints;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TS
 {
@@ -8,23 +6,20 @@ namespace TS
     {
         private readonly string PROPERTY_NAME = "scaleZ";
 
-        public override float Value
+        protected override float GetValTransform()
         {
-            get
-            {
-                if (transform != null)
-                {
-                    return transform.localScale.x;
-                }
-                return 0;
-            }
-            set
-            {
-                if (transform != null)
-                {
-                    transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, value);
-                }
-            }
+            return transform.localScale.z;
+        }
+        protected override void SetValTransform(float value)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, value);
+        }
+        protected override float GetValRectTransform()
+        {
+            return rectTransform.localScale.z;
+        }
+        protected override void SetValRectTransform(float value)
+        {
         }
 
         public override string PropertyName

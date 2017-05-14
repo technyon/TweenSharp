@@ -8,24 +8,21 @@ namespace TS
     {
         private readonly string PROPERTY_NAME = "x";
 
-        public override float Value
+        protected override float GetValTransform()
         {
-            get
-            {
-                if (transform != null)
-                {
-                    return transform.position.x;
-                }
-                return 0;
-            }
-            set
-            {
-                if (transform != null)
-                {
-//                    Debug.Log(value.ToString());
-                    transform.position = new Vector3(value, transform.position.y, transform.position.z);
-                }
-            }
+            return transform.position.x;
+        }
+        protected override void SetValTransform(float value)
+        {
+            transform.position = new Vector3(value, transform.position.y, transform.position.z);
+        }
+        protected override float GetValRectTransform()
+        {
+            return rectTransform.anchoredPosition.x;
+        }
+        protected override void SetValRectTransform(float value)
+        {
+            rectTransform.anchoredPosition = new Vector2(value, rectTransform.anchoredPosition.y);
         }
 
         public override string PropertyName

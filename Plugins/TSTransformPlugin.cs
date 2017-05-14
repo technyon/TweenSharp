@@ -6,6 +6,13 @@ namespace TS
     public class TSTransformPlugin : TSPlugin
     {
         protected Transform transform;
+        protected RectTransform rectTransform;
+
+        private delegate float dGetVal();
+        private delegate void dSetVal(float value);
+
+        private dGetVal getVal;
+        private dSetVal setVal;
 
         public override object Target
         {
@@ -14,14 +21,71 @@ namespace TS
                 GameObject go = value as GameObject;
                 if (go != null)
                 {
-                    transform = go.transform;
+                    rectTransform = go.GetComponent<RectTransform>();
+                    if (rectTransform != null)
+                    {
+                        getVal = GetValRectTransform;
+                        setVal = SetValRectTransform;
+                    }
+                    else
+                    {
+                        transform = go.transform;
+                        getVal = GetValTransform;
+                        setVal = SetValTransform;
+                    }
                 }
                 else
                 {
-                    throw new Exception("TweenSharp: Trying to tween transform property on a non-GameObject.");
+                    rectTransform = value as RectTransform;
+                    if (rectTransform != null)
+                    {
+                        getVal = GetValRectTransform;
+                        setVal = SetValRectTransform;
+                    }
+                    else
+                    {
+                        transform = value as Transform;
+                        if (transform != null)
+                        {
+                            getVal = GetValTransform;
+                            setVal = SetValTransform;
+                        }
+                    }
                 }
                 base.Target = value;
+
+                if (getVal == null)
+                {
+                    throw new Exception("TweenSharp: Trying to tween property " + PropertyName + ", but object isn't of type GameObject, Transform or RectTransform.");
+                }
             }
+        }
+
+        public override float Value
+        {
+            get
+            {
+                return getVal();
+            }
+            set
+            {
+                setVal(value);
+            }
+        }
+
+        protected virtual float GetValTransform()
+        {
+            return 0;
+        }
+        protected virtual void SetValTransform(float value)
+        {
+        }
+        protected virtual float GetValRectTransform()
+        {
+            return 0;
+        }
+        protected virtual void SetValRectTransform(float value)
+        {
         }
     }
 }
