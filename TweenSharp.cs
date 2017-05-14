@@ -112,39 +112,29 @@ public class TweenSharp
     {
         int len = propertyNames.Count;
         float timePassed = time - startTime;
+        bool finished = false;
 
-        if (timePassed < duration)
+        if (timePassed > duration)
         {
-            for (int i = 0; i < len; i++)
+            timePassed = duration;
+            finished = true;
+        }
+
+        for (int i = 0; i < len; i++)
+        {
+            float startVal = propertyStartValues[i];
+            float targetVal = propertyTargetValues[i];
+            TSPlugin plugin = propertyPlugins[i];
+
+            if (plugin == null)
             {
-                SetValue(i, timePassed);
+                PropertyInfo pi = propertyInfos[i];
+                pi.SetValue(target, easeFunction(timePassed, startVal, targetVal - startVal, duration), null);
             }
-            return false;
-        }
-        else
-        {
-            for (int i = 0; i < len; i++)
+            else
             {
-                SetValue(i, duration);
-            }
-            return true;
-        }
-    }
-
-    private void SetValue(int i, float timePassed)
-    {
-        float startVal = propertyStartValues[i];
-        float targetVal = propertyTargetValues[i];
-        TSPlugin plugin = propertyPlugins[i];
-
-        if (plugin == null)
-        {
-            PropertyInfo pi = propertyInfos[i];
-            pi.SetValue(target, easeFunction(timePassed, startVal, targetVal - startVal, duration), null);
-        }
-        else
-        {
-            plugin.Value = easeFunction(timePassed, startVal, targetVal - startVal, duration);
-        }
+                plugin.Value = easeFunction(timePassed, startVal, targetVal - startVal, duration);
+            }        }
+        return finished;
     }
 }
