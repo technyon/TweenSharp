@@ -17,7 +17,7 @@ public class TweenSharp
 
 /*
         , onCompleteScope:1,
-    useFrames:1, runBackwards:1, startAt:1, onUpdate:1, onUpdateParams:1, onUpdateScope:1,
+    useFrames:1, runBackwards:1, startAt:1, onUpdateScope:1,
     onStart:1, onStartParams:1, onStartScope:1, onReverseComplete:1, onReverseCompleteParams:1, onReverseCompleteScope:1,
     onRepeat:1, onRepeatParams:1, onRepeatScope:1, easeParams:1,
     yoyo:1, onCompleteListener:1, onUpdateListener:1, onStartListener:1, onReverseCompleteListener:1, onRepeatListener:1,
