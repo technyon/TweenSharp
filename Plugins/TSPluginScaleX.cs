@@ -1,11 +1,12 @@
-﻿using NUnit.Framework.Constraints;
+﻿using System;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace TS
 {
-    public class TSPluginZ : TSTransformPlugin
+    public class TSPluginScaleX : TSTransformPlugin
     {
-        private readonly string PROPERTY_NAME = "z";
+        private readonly string PROPERTY_NAME = "scaleX";
 
         public override float Value
         {
@@ -13,7 +14,7 @@ namespace TS
             {
                 if (transform != null)
                 {
-                    return transform.position.z;
+                    return transform.localScale.x;
                 }
                 return 0;
             }
@@ -21,7 +22,7 @@ namespace TS
             {
                 if (transform != null)
                 {
-                    transform.position = new Vector3(transform.position.x, transform.position.y, value);
+                    transform.localScale = new Vector3(value, transform.localScale.y, transform.localScale.z);
                 }
             }
         }

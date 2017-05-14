@@ -6,7 +6,7 @@ namespace TS
 {
     public class TSPluginX : TSTransformPlugin
     {
-        private readonly string PROPERTY_NAME = "X";
+        private readonly string PROPERTY_NAME = "x";
 
         public override float Value
         {
