@@ -18,7 +18,7 @@ public class TweenSharp
     private List<PropertyInfo> propertyInfos;
 
     private float startTime;
-    public TSEase.EaseFunction easeFunction = TSEase.Linear;
+    public TSEase.EaseFunction easeFunction = Linear.EaseNone;
 
     public float delay = 0;
     public int overwrite = 0;
