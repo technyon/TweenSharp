@@ -18,7 +18,21 @@ public class TweenSharp
     private List<PropertyInfo> propertyInfos;
 
     private float startTime;
-    private TSEase.EaseFunction easeFunction = TSEase.Linear;
+    public TSEase.EaseFunction easeFunction = TSEase.Linear;
+
+    public float delay = 0;
+    public int overwrite = 0;
+    private Action onComplete = null;
+    private Action onCompleteObj = null;
+    public object onCompleteParams = null;
+/*
+        , onCompleteScope:1,
+    useFrames:1, runBackwards:1, startAt:1, onUpdate:1, onUpdateParams:1, onUpdateScope:1,
+    onStart:1, onStartParams:1, onStartScope:1, onReverseComplete:1, onReverseCompleteParams:1, onReverseCompleteScope:1,
+    onRepeat:1, onRepeatParams:1, onRepeatScope:1, easeParams:1,
+    yoyo:1, onCompleteListener:1, onUpdateListener:1, onStartListener:1, onReverseCompleteListener:1, onRepeatListener:1,
+    orientToBezier:1, immediateRender:1, repeat:1, repeatDelay:1, data:1, paused:1, reversed:1};
+*/
 
     public TweenSharp(object target, float duration, Dictionary<string, object> args)
     {
@@ -37,27 +51,32 @@ public class TweenSharp
         foreach (KeyValuePair<string, object> kvp in args)
         {
             string key = kvp.Key;
-            propertyNames.Add(key);
-            propertyInfos.Add(null);
 
-            TSPlugin plugin = PluginManager.GetPlugin(key);
-            if (plugin != null)
+            if (!TSKeywordParser.Parse(this, kvp) )
             {
-                plugin.Target = target;
-            }
-            propertyPlugins.Add(plugin);
 
-            if (kvp.Value is float)
-            {
+                propertyNames.Add(key);
+                propertyInfos.Add(null);
+
+                TSPlugin plugin = PluginManager.GetPlugin(key);
                 if (plugin != null)
                 {
-                    propertyStartValues.Add(plugin.Value);
+                    plugin.Target = target;
                 }
-                else
+                propertyPlugins.Add(plugin);
+
+                if (kvp.Value is float)
                 {
-                    propertyStartValues.Add(0f);
+                    if (plugin != null)
+                    {
+                        propertyStartValues.Add(plugin.Value);
+                    }
+                    else
+                    {
+                        propertyStartValues.Add(0f);
+                    }
+                    propertyTargetValues.Add((float) kvp.Value);
                 }
-                propertyTargetValues.Add((float) kvp.Value);
             }
         }
 
