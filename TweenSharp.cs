@@ -110,31 +110,36 @@ public class TweenSharp
 
     public bool Update(float time)
     {
-        int len = propertyNames.Count;
-        float timePassed = time - startTime;
-        bool finished = false;
-
-        if (timePassed > duration)
+        if (startTime + delay < time)
         {
-            timePassed = duration;
-            finished = true;
-        }
+            int len = propertyNames.Count;
+            float timePassed = time - startTime - delay;
+            bool finished = false;
 
-        for (int i = 0; i < len; i++)
-        {
-            float startVal = propertyStartValues[i];
-            float targetVal = propertyTargetValues[i];
-            TSPlugin plugin = propertyPlugins[i];
-
-            if (plugin == null)
+            if (timePassed > duration)
             {
-                PropertyInfo pi = propertyInfos[i];
-                pi.SetValue(target, ease(timePassed, startVal, targetVal - startVal, duration), null);
+                timePassed = duration;
+                finished = true;
             }
-            else
+
+            for (int i = 0; i < len; i++)
             {
-                plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration);
-            }        }
-        return finished;
+                float startVal = propertyStartValues[i];
+                float targetVal = propertyTargetValues[i];
+                TSPlugin plugin = propertyPlugins[i];
+
+                if (plugin == null)
+                {
+                    PropertyInfo pi = propertyInfos[i];
+                    pi.SetValue(target, ease(timePassed, startVal, targetVal - startVal, duration), null);
+                }
+                else
+                {
+                    plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration);
+                }
+            }
+            return finished;
+        }
+        return false;
     }
 }

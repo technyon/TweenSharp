@@ -22,6 +22,7 @@ namespace TS
             {
                 if (transform != null)
                 {
+//                    Debug.Log(value.ToString());
                     transform.position = new Vector3(value, transform.position.y, transform.position.z);
                 }
             }
