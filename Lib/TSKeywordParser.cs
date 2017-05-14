@@ -17,6 +17,8 @@ namespace TS
             keywordTable["delay"] = keywordFunctions.Delay;
             keywordTable["onComplete"] = keywordFunctions.OnComplete;
             keywordTable["onCompleteParams"] = keywordFunctions.OnCompleteParams;
+            keywordTable["onUpdate"] = keywordFunctions.OnUpdate;
+            keywordTable["onUpdateParams"] = keywordFunctions.OnUpdateParams;
             keywordTable["ease"] = keywordFunctions.Ease;
         }
 

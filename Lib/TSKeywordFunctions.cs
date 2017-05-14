@@ -40,5 +40,22 @@ namespace TS
         {
             tween.onCompleteParams = args;
         }
+
+        public void OnUpdate(TweenSharp tween, object args)
+        {
+            if (args is Action)
+            {
+                tween.onUpdate = args as Action;
+            }
+            if (args is Action<object>)
+            {
+                tween.onUpdateArg = args as Action<object>;
+            }
+        }
+
+        public void OnUpdateParams(TweenSharp tween, object args)
+        {
+            tween.onUpdateParams = args;
+        }
     }
 }
