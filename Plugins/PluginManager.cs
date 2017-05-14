@@ -5,7 +5,7 @@ namespace TS
 {
     public class PluginManager
     {
-        private static List<Type> pluginList = new List<Type>() { typeof(TSPluginX) };
+        private static List<Type> pluginList = new List<Type>() { typeof(TSPluginX), typeof(TSPluginY), typeof(TSPluginZ) };
         private static Dictionary<string, Type> plugins;
 
         public static void Init()

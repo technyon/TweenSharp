@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace TS
 {
-    public class TSPluginX : TSPlugin
+    public class TSPluginY : TSPlugin
     {
-        private readonly string PROPERTY_NAME = "X";
+        private readonly string PROPERTY_NAME = "Y";
 
         private GameObject gameObject;
 
@@ -24,7 +24,7 @@ namespace TS
             {
                 if (gameObject != null)
                 {
-                    return gameObject.transform.position.x;
+                    return gameObject.transform.position.y;
                 }
                 return 0;
             }
@@ -32,7 +32,7 @@ namespace TS
             {
                 if (gameObject != null)
                 {
-                    gameObject.transform.position = new Vector3(value, gameObject.transform.position.y, gameObject.transform.position.z);
+                    gameObject.transform.position = new Vector3(gameObject.transform.position.x, value, gameObject.transform.position.z);
                 }
             }
         }
