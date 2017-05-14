@@ -1,19 +1,24 @@
-﻿public class Quart
+﻿using TS;
+
+public class Quart
 {
-    public static float EaseIn(float t, float b, float c, float d)
+    public static TSEase.EaseFunction EaseIn = FEaseIn;
+    private static float FEaseIn(float t, float b, float c, float d)
     {
         t /= d;
         return c*t*t*t*t + b;
     }
 
-    public static float EaseOut(float t, float b, float c, float d)
+    public static TSEase.EaseFunction EaseOut = FEaseOut;
+    private static float FEaseOut(float t, float b, float c, float d)
     {
         t /= d;
         t--;
         return -c * (t*t*t*t - 1) + b;
     }
 
-    public static float EaseInOut(float t, float b, float c, float d)
+    public static TSEase.EaseFunction EaseInOut = FEaseInOut;
+    private static float FEaseInOut(float t, float b, float c, float d)
     {
 
         t /= d/2;

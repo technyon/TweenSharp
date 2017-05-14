@@ -1,21 +1,13 @@
-﻿public class Linear
+﻿using TS;
+
+public class Linear
 {
-    public static float EaseNone(float t, float b, float c, float d)
-    {
-        return c * t / d + b;
-    }
+    public static TSEase.EaseFunction EaseNone = FEase;
+    public static TSEase.EaseFunction EaseIn = FEase;
+    public static TSEase.EaseFunction EaseOut = FEase;
+    public static TSEase.EaseFunction EaseInOut = FEase;
 
-    public static float EaseIn(float t, float b, float c, float d)
-    {
-        return c * t / d + b;
-    }
-
-    public static float EaseOut(float t, float b, float c, float d)
-    {
-        return c * t / d + b;
-    }
-
-    public static float EaseInOut(float t, float b, float c, float d)
+    private static float FEase(float t, float b, float c, float d)
     {
         return c * t / d + b;
     }
