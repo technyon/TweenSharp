@@ -29,7 +29,6 @@ namespace TS
                 base.Value = value;
                 if (gameObject != null)
                 {
-                    Debug.Log(value.ToString());
                     gameObject.SetActive(value != 0);
                 }
             }
