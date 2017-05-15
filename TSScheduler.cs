@@ -21,7 +21,7 @@ namespace TS
             {
                 instance = this;
                 tweens = new List<TweenSharp>();
-                PluginManager.Init();
+                TSPluginManager.Init();
                 removeList = new List<TweenSharp>();
 
                 TSKeywordParser.Init();

@@ -41,7 +41,7 @@ public class TweenSharp
 
     public static void Activate(Type pluginType)
     {
-        PluginManager.Activate(pluginType);
+        TSPluginManager.Activate(pluginType);
     }
 
     public TweenSharp(object target, float duration, Dictionary<string, object> args)
@@ -68,7 +68,7 @@ public class TweenSharp
                 propertyNames.Add(key);
                 propertyInfos.Add(null);
 
-                TSPlugin plugin = PluginManager.GetPlugin(key);
+                TSPlugin plugin = TSPluginManager.GetPlugin(key);
                 if (plugin != null)
                 {
                     plugin.Target = target;

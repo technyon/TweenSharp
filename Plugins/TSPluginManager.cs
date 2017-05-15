@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TS
 {
-    public class PluginManager
+    public class TSPluginManager
     {
         private static List<Type> pluginList = new List<Type>()
         {
