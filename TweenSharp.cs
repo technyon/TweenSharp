@@ -39,6 +39,10 @@ public class TweenSharp
     private float startTime;
     public TSEase.EaseFunction ease = Linear.EaseNone;
 
+    public static void Activate(Type pluginType)
+    {
+        PluginManager.Activate(pluginType);
+    }
 
     public TweenSharp(object target, float duration, Dictionary<string, object> args)
     {

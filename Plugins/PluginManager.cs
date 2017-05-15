@@ -18,6 +18,15 @@ namespace TS
         };
         private static Dictionary<string, Type> plugins;
 
+        public static void Activate(Type pluginType)
+        {
+            TSPlugin plugin = Activator.CreateInstance(pluginType) as TSPlugin;
+            if (plugin != null)
+            {
+                plugins[plugin.PropertyName] = pluginType;
+            }
+        }
+
         public static void Init()
         {
             if (plugins == null)
@@ -25,8 +34,7 @@ namespace TS
                 plugins = new Dictionary<string, Type>();
                 foreach (Type pluginType in pluginList)
                 {
-                    TSPlugin plugin = Activator.CreateInstance(pluginType) as TSPlugin;
-                    plugins[plugin.PropertyName] = pluginType;
+                    Activate(pluginType);
                 }
                 pluginList = null;
             }
