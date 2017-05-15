@@ -18,9 +18,6 @@ namespace TS
         {
             return rectTransform.localScale.z;
         }
-        protected override void SetValRectTransform(float value)
-        {
-        }
 
         public override string PropertyName
         {

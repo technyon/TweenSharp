@@ -12,7 +12,9 @@ namespace TS
             typeof(TSPluginZ),
             typeof(TSPluginScaleX),
             typeof(TSPluginScaleY),
-            typeof(TSPluginScaleZ)
+            typeof(TSPluginScaleZ),
+            typeof(TSPluginAlpha),
+            typeof(TSPluginAutoAlpha)
         };
         private static Dictionary<string, Type> plugins;
 
