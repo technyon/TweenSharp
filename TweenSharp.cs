@@ -83,6 +83,12 @@ public class TweenSharp
                     }
                     propertyTargetValues.Add((float) kvp.Value);
                 }
+                else
+                {
+                    propertyStartValues.Add(0f);
+                    propertyTargetValues.Add(0f);
+                    throw new Exception("Tweensharp: Value is not of type float.");
+                }
             }
         }
 
