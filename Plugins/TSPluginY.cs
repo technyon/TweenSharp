@@ -1,6 +1,4 @@
-﻿using System;
-using NUnit.Framework.Constraints;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TS
 {
