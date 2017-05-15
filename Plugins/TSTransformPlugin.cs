@@ -8,11 +8,8 @@ namespace TS
         protected Transform transform;
         protected RectTransform rectTransform;
 
-        private delegate float dGetVal();
-        private delegate void dSetVal(float value);
-
-        private dGetVal getVal;
-        private dSetVal setVal;
+        private TSDelegates.TSGetVal getVal;
+        private TSDelegates.TSSetVal setVal;
 
         public override object Target
         {
