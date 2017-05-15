@@ -27,7 +27,7 @@ namespace TS
                     Transform transform = value as Transform;
                     if (transform != null)
                     {
-                        transform.GetComponent<Renderer>();
+                        renderer = transform.GetComponent<Renderer>();
                     }
                 }
                 if (renderer == null)
