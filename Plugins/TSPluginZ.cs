@@ -2,7 +2,7 @@
 
 namespace TS
 {
-    public class TSPluginZ : TSTransformPlugin
+    public class TSPluginZ : TSAutoTransformPlugin
     {
         private readonly string PROPERTY_NAME = "z";
 

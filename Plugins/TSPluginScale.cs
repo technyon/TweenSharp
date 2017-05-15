@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace TS
 {
-    public class TSPluginScaleX : TSTransformPlugin
+    public class TSPluginScale : TSTransformPlugin
     {
-        private readonly string PROPERTY_NAME = "scaleX";
+        private readonly string PROPERTY_NAME = "scale";
 
         public override float Value
         {
             get { return transform.localScale.x; }
-            set { transform.localScale = new Vector3(value, transform.localScale.y, transform.localScale.z); }
+            set { transform.localScale = new Vector3(value, value, value); }
         }
 
         public override string PropertyName

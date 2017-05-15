@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TS
 {
@@ -6,21 +7,10 @@ namespace TS
     {
         private readonly string PROPERTY_NAME = "scaleY";
 
-        protected override float GetValTransform()
+        public override float Value
         {
-            return transform.localScale.y;
-        }
-        protected override void SetValTransform(float value)
-        {
-            transform.localScale = new Vector3(transform.localScale.x, value, transform.localScale.z);
-        }
-        protected override float GetValRectTransform()
-        {
-            return rectTransform.localScale.y;
-        }
-        protected override void SetValRectTransform(float value)
-        {
-            rectTransform.localScale = new Vector2(rectTransform.localScale.x, value);
+            get { return transform.localScale.y; }
+            set { transform.localScale = new Vector3(transform.localScale.x, value, transform.localScale.z); }
         }
 
         public override string PropertyName
