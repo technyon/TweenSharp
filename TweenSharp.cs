@@ -52,9 +52,7 @@ public class TweenSharp
                 timePassed = duration;
             }
 
-			UpdateValues(timePassed);
-			
-			duration -= (timePassed - timePassedSoFar);
+			UpdateValues(timePassed);		
             startTime -= (timePassed - timePassedSoFar);            
         }
     }
