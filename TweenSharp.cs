@@ -39,6 +39,25 @@ public class TweenSharp
     private float startTime;
     public TSEase.EaseFunction ease = Linear.EaseNone;
 
+    //TODO Not tested yet, but theorethically should work :) Jerry
+    public float Progress
+    {
+        set
+        {
+            float timePassedSoFar = Time.realtimeSinceStartup - startTime - delay;
+            float timePassed = duration * value;
+
+            if (timePassed > duration)
+            {
+                timePassed = duration;
+            }
+
+            startTime -= (timePassed - timePassedSoFar);
+
+            UpdateValues(timePassed);
+        }
+    }
+
     public static void Activate(Type pluginType)
     {
         TSPluginManager.Activate(pluginType);
@@ -129,11 +148,38 @@ public class TweenSharp
         TSScheduler.RemoveTween(this);
     }
 
+    private void UpdateValues(float timePassed, bool triggerUpdateCallbacks = true)
+    {
+        int len = propertyNames.Count;
+
+        for (int i = 0; i < len; i++)
+        {
+            float startVal = propertyStartValues[i];
+            float targetVal = propertyTargetValues[i];
+            TSPlugin plugin = propertyPlugins[i];
+
+            if (plugin == null)
+            {
+                PropertyInfo pi = propertyInfos[i];
+                pi.SetValue(target, ease(timePassed, startVal, targetVal - startVal, duration), null);
+            }
+            else
+            {
+                plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration);
+            }
+
+            if(triggerUpdateCallbacks)
+            {
+                if (onUpdate != null) { onUpdate(); }
+                if (onUpdateArg != null) { onUpdateArg(onUpdateParams); }
+            }
+        }
+    }
+
     public bool Update(float time)
     {
         if (startTime + delay < time)
         {
-            int len = propertyNames.Count;
             float timePassed = time - startTime - delay;
             bool finished = false;
 
@@ -143,27 +189,11 @@ public class TweenSharp
                 finished = true;
             }
 
-            for (int i = 0; i < len; i++)
-            {
-                float startVal = propertyStartValues[i];
-                float targetVal = propertyTargetValues[i];
-                TSPlugin plugin = propertyPlugins[i];
+            UpdateValues(timePassed);
 
-                if (plugin == null)
-                {
-                    PropertyInfo pi = propertyInfos[i];
-                    pi.SetValue(target, ease(timePassed, startVal, targetVal - startVal, duration), null);
-                }
-                else
-                {
-                    plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration);
-                }
-
-                if (onUpdate != null) { onUpdate(); }
-                if (onUpdateArg != null) { onUpdateArg(onUpdateParams); }
-            }
             return finished;
         }
+
         return false;
     }
 }
