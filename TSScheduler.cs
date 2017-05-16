@@ -15,6 +15,11 @@ namespace TS
             instance.tweens.Add(tweensharp);
         }
 
+        public static void RemoveTween(TweenSharp tween)
+        {
+            instance.tweens.Remove(tween);
+        }
+
         void Awake()
         {
             if (instance == null)

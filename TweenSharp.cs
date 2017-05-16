@@ -124,6 +124,11 @@ public class TweenSharp
         TSScheduler.Register(this);
     }
 
+    public void Kill()
+    {
+        TSScheduler.RemoveTween(this);
+    }
+
     public bool Update(float time)
     {
         if (startTime + delay < time)
