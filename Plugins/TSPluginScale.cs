@@ -9,7 +9,7 @@ namespace TS
 
         public override float Value
         {
-            get { return transform.localScale.x; }
+            get { return (transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3; }
             set { transform.localScale = new Vector3(value, value, value); }
         }
 

@@ -13,6 +13,8 @@ namespace TS
             typeof(TSPluginScaleX),
             typeof(TSPluginScaleY),
             typeof(TSPluginScaleZ),
+            typeof(TSPluginSizeDeltaX),
+            typeof(TSPluginSizeDeltaY),
             typeof(TSPluginAlpha),
             typeof(TSPluginAutoAlpha)
         };
