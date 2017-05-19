@@ -39,21 +39,21 @@ public class TweenSharp
     private float startTime;
     public TSEase.EaseFunction ease = Linear.EaseNone;
 
-    //TODO Not tested yet, but theorethically should work :) Jerry
     public float Progress
     {
-        set
+        get
         {
-            float timePassedSoFar = Time.realtimeSinceStartup - startTime - delay;
-            float timePassed = duration * value;
-
-            if (timePassed > duration)
+            float now = Time.realtimeSinceStartup;
+            if (now > startTime + duration)
             {
-                timePassed = duration;
+                return 1;
             }
-
-			UpdateValues(timePassed);		
-            startTime -= (timePassed - timePassedSoFar);            
+            return (now - startTime) / duration ;
+        }
+        set { 
+            float now = Time.realtimeSinceStartup;
+            startTime = now - value * duration;
+            Update(now);
         }
     }
 
