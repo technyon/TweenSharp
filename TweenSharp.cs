@@ -11,6 +11,7 @@ public class TweenSharp: TSTimeDef
     public Action onUpdate = null;
     public Action<object> onUpdateArg = null;
     public object onUpdateParams = null;
+    public bool reversed = false;
 
 /*
         , onCompleteScope:1,
@@ -107,23 +108,42 @@ public class TweenSharp: TSTimeDef
             }
         }
 
-
         TSScheduler.Register(this);
     }
 
+    public void Restart()
+    {
+        startTime = Time.realtimeSinceStartup;
+    }
+    
     public override bool Update(float time)
     {
         if (startTime + delay < time)
         {
             int len = propertyNames.Count;
-            float timePassed = time - startTime - delay;
+            float timePassed;
             bool finished = false;
 
-            if (timePassed > duration)
+            if (reversed)
             {
-                timePassed = duration;
-                finished = true;
+                timePassed = duration - (time - startTime - delay);
+                if (timePassed <= 0)
+                {
+                    timePassed = 0;
+                    finished = true;
+                }
             }
+            else
+            {
+                timePassed = time - startTime - delay;
+
+                if (timePassed > duration)
+                {
+                    timePassed = duration;
+                    finished = true;
+                }
+            }
+
 
             for (int i = 0; i < len; i++)
             {
