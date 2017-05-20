@@ -147,38 +147,11 @@ public class TweenSharp
         TSScheduler.RemoveTween(this);
     }
 
-    private void UpdateValues(float timePassed, bool triggerUpdateCallbacks = true)
-    {
-        int len = propertyNames.Count;
-
-        for (int i = 0; i < len; i++)
-        {
-            float startVal = propertyStartValues[i];
-            float targetVal = propertyTargetValues[i];
-            TSPlugin plugin = propertyPlugins[i];
-
-            if (plugin == null)
-            {
-                PropertyInfo pi = propertyInfos[i];
-                pi.SetValue(target, ease(timePassed, startVal, targetVal - startVal, duration), null);
-            }
-            else
-            {
-                plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration);
-            }
-
-            if(triggerUpdateCallbacks)
-            {
-                if (onUpdate != null) { onUpdate(); }
-                if (onUpdateArg != null) { onUpdateArg(onUpdateParams); }
-            }
-        }
-    }
-
     public bool Update(float time)
     {
         if (startTime + delay < time)
         {
+            int len = propertyNames.Count;
             float timePassed = time - startTime - delay;
             bool finished = false;
 
@@ -188,11 +161,27 @@ public class TweenSharp
                 finished = true;
             }
 
-            UpdateValues(timePassed);
+            for (int i = 0; i < len; i++)
+            {
+                float startVal = propertyStartValues[i];
+                float targetVal = propertyTargetValues[i];
+                TSPlugin plugin = propertyPlugins[i];
 
+                if (plugin == null)
+                {
+                    PropertyInfo pi = propertyInfos[i];
+                    pi.SetValue(target, ease(timePassed, startVal, targetVal - startVal, duration), null);
+                }
+                else
+                {
+                    plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration);
+                }
+
+                if (onUpdate != null) { onUpdate(); }
+                if (onUpdateArg != null) { onUpdateArg(onUpdateParams); }
+            }
             return finished;
         }
-
         return false;
     }
 }
