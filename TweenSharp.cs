@@ -34,29 +34,6 @@ public class TweenSharp: TSTimeDef
 
     public TSEase.EaseFunction ease = Linear.EaseNone;
 
-    public float Progress
-    {
-        get
-        {
-            float now = Time.realtimeSinceStartup;
-            if (now > startTime + duration)
-            {
-                return 1;
-            }
-            return (now - startTime) / duration ;
-        }
-        set { 
-            float now = Time.realtimeSinceStartup;
-            startTime = now - value * duration;
-            Update(now);
-        }
-    }
-
-    public static void Activate(Type pluginType)
-    {
-        TSPluginManager.Activate(pluginType);
-    }
-
     public TweenSharp(object target, float duration, Dictionary<string, object> args) : base(duration)
     {
         float f = 0;
@@ -134,11 +111,6 @@ public class TweenSharp: TSTimeDef
         TSScheduler.Register(this);
     }
 
-    public void Kill()
-    {
-        TSScheduler.Unregister(this);
-    }
-
     public override bool Update(float time)
     {
         if (startTime + delay < time)
@@ -199,5 +171,10 @@ public class TweenSharp: TSTimeDef
     public static void KillAllDelayedCallsTo(Action<object> callback)
     {
         TSScheduler.KillAllDelayedCallsTo(callback);
+    }
+    
+    public static void Activate(Type pluginType)
+    {
+        TSPluginManager.Activate(pluginType);
     }
 }

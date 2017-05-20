@@ -6,9 +6,4 @@ public class DC : TSTimeDef
     {
         
     }
-
-    public void Kill()
-    {
-        TSScheduler.Unregister(this);
-    }
 }
