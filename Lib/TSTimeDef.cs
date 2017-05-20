@@ -11,6 +11,9 @@ namespace TS
         public object onCompleteParams = null;
         public Action onComplete = null;
 
+        protected bool paused = false;
+        
+        private float pausedTime;
 
         public float Progress
         {
@@ -28,8 +31,28 @@ namespace TS
                 startTime = now - value * duration;
                 Update(now);
             }
-        }        
-        
+        }
+
+        public bool Paused
+        {
+            get { return paused; }
+            set
+            {
+                if (paused != value)
+                {
+                    paused = value;
+                    if (paused)
+                    {
+                        pausedTime = Time.realtimeSinceStartup;
+                    }
+                    else
+                    {
+                        startTime =  Time.realtimeSinceStartup - (pausedTime - startTime);
+                    }
+                }
+            }
+        }
+
         public TSTimeDef(float duration)
         {
             startTime = Time.realtimeSinceStartup;

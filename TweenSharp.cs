@@ -118,7 +118,7 @@ public class TweenSharp: TSTimeDef
     
     public override bool Update(float time)
     {
-        if (startTime + delay < time)
+        if (!paused && startTime + delay < time)
         {
             int len = propertyNames.Count;
             float timePassed;
