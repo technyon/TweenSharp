@@ -4,13 +4,10 @@ using System.Reflection;
 using TS;
 using UnityEngine;
 
-public class TweenSharp
+public class TweenSharp: TSTimeDef
 {
     public float delay = 0;
     public int overwrite = 0;
-    public Action onComplete = null;
-    public Action<object> onCompleteArg = null;
-    public object onCompleteParams = null;
     public Action onUpdate = null;
     public Action<object> onUpdateArg = null;
     public object onUpdateParams = null;
@@ -28,7 +25,6 @@ public class TweenSharp
     private Dictionary<string, float> properties;
 
     private object target;
-    private float duration;
 
     private List<string> propertyNames;
     private List<float> propertyStartValues;
@@ -36,7 +32,6 @@ public class TweenSharp
     private List<TSPlugin> propertyPlugins;
     private List<PropertyInfo> propertyInfos;
 
-    private float startTime;
     public TSEase.EaseFunction ease = Linear.EaseNone;
 
     public float Progress
@@ -62,13 +57,10 @@ public class TweenSharp
         TSPluginManager.Activate(pluginType);
     }
 
-    public TweenSharp(object target, float duration, Dictionary<string, object> args)
+    public TweenSharp(object target, float duration, Dictionary<string, object> args) : base(duration)
     {
         float f = 0;
         this.target = target;
-        this.duration = duration;
-
-        startTime = Time.realtimeSinceStartup;
 
         propertyNames = new List<string>();
         propertyStartValues = new List<float>();
@@ -144,10 +136,10 @@ public class TweenSharp
 
     public void Kill()
     {
-        TSScheduler.RemoveTween(this);
+        TSScheduler.Unregister(this);
     }
 
-    public bool Update(float time)
+    public override bool Update(float time)
     {
         if (startTime + delay < time)
         {
@@ -183,5 +175,29 @@ public class TweenSharp
             return finished;
         }
         return false;
+    }
+    
+    public static DC DelayedCall(float delay, Action callback)
+    {
+        DC dc = new DC(delay);
+        dc.onComplete = callback;
+        TSScheduler.Register(dc);
+        return dc;
+    }
+    public static DC DelayedCall(float delay, Action<object> callback, object pars)
+    {
+        DC dc = new DC(delay);
+        dc.onCompleteArg = callback;
+        dc.onCompleteParams = pars;
+        TSScheduler.Register(dc);
+        return dc;
+    }
+    public static void KillAllDelayedCallsTo(Action callback)
+    {
+        TSScheduler.KillAllDelayedCallsTo(callback);
+    }
+    public static void KillAllDelayedCallsTo(Action<object> callback)
+    {
+        TSScheduler.KillAllDelayedCallsTo(callback);
     }
 }
