@@ -170,6 +170,11 @@ public class TweenSharp: TSTimeDef
         }
         return false;
     }
+
+    public static TweenSharp To(object target, float duration, Dictionary<string, object> args)
+    {
+        return new TweenSharp(target, duration, args);
+    }
     
     public static DC DelayedCall(float delay, Action callback)
     {
