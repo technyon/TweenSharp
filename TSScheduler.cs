@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace TS
@@ -14,13 +13,10 @@ namespace TS
 
         public static void Register(TSTimeDef tweensharp, bool dupeCheck = false)
         {
-            Debug.Log("----");
-            Debug.Log(instance.tweens.Count);
             if (!dupeCheck || !instance.tweens.Contains(tweensharp))
             {
                 instance.tweens.Add(tweensharp);
             }
-            Debug.Log(instance.tweens.Count);
         }
 
         public static void Unregister(TSTimeDef tween)
