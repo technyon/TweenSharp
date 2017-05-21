@@ -1,5 +1,3 @@
-Tween#
-
 ### What is Tween# ?
 Tween# (TweenSharp) is a tweening library for C# / Unity with an interface inspired by Greensocks TweenMax.
 
