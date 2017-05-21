@@ -115,6 +115,7 @@ public class TweenSharp: TSTimeDef
     public void Restart()
     {
         startTime = Time.realtimeSinceStartup;
+        TSScheduler.Register(this, true);
     }
     
     public override bool Update(float time)
