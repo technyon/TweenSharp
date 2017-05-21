@@ -10,8 +10,8 @@ namespace TS
         public Action<object> onCompleteArg = null;
         public object onCompleteParams = null;
         public Action onComplete = null;
-
         protected bool paused = false;
+        public bool suppressEvents = false;
         
         private float pausedTime;
 

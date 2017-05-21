@@ -12,6 +12,7 @@ public class TweenSharp: TSTimeDef
     public Action<object> onUpdateArg = null;
     public object onUpdateParams = null;
     public bool reversed = false;
+    public bool suppressEvents = false;
 
 /*
         , onCompleteScope:1,
@@ -161,8 +162,8 @@ public class TweenSharp: TSTimeDef
                     plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration);
                 }
 
-                if (onUpdate != null) { onUpdate(); }
-                if (onUpdateArg != null) { onUpdateArg(onUpdateParams); }
+                if (onUpdate != null && !suppressEvents) { onUpdate(); }
+                if (onUpdateArg != null && !suppressEvents) { onUpdateArg(onUpdateParams); }
             }
             return finished;
         }

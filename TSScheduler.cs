@@ -80,11 +80,11 @@ namespace TS
             {
                 tweens.Remove(tween);
 
-                if (tween.onComplete != null)
+                if (tween.onComplete != null && !tween.suppressEvents)
                 {
                     tween.onComplete();
                 }
-                if (tween.onCompleteArg != null)
+                if (tween.onCompleteArg != null && !tween.suppressEvents)
                 {
                     tween.onCompleteArg(tween.onCompleteParams);
                 }
