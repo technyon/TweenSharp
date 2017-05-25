@@ -13,28 +13,16 @@ public class TweenSharp: TSTimeDef
     public object onUpdateParams = null;
     public bool reversed = false;
     public bool suppressEvents = false;
-
-/*
-        , onCompleteScope:1,
-    useFrames:1, runBackwards:1, startAt:1, onUpdateScope:1,
-    onStart:1, onStartParams:1, onStartScope:1, onReverseComplete:1, onReverseCompleteParams:1, onReverseCompleteScope:1,
-    onRepeat:1, onRepeatParams:1, onRepeatScope:1, easeParams:1,
-    yoyo:1, onCompleteListener:1, onUpdateListener:1, onStartListener:1, onReverseCompleteListener:1, onRepeatListener:1,
-    orientToBezier:1, immediateRender:1, repeat:1, repeatDelay:1, data:1, paused:1, reversed:1};
-*/
+    public TSEase.EaseFunction ease = Linear.EaseNone;
 
     private float position;
     private Dictionary<string, float> properties;
-
     private object target;
-
     private List<string> propertyNames;
     private List<float> propertyStartValues;
     private List<float> propertyTargetValues;
     private List<TSPlugin> propertyPlugins;
     private List<PropertyInfo> propertyInfos;
-
-    public TSEase.EaseFunction ease = Linear.EaseNone;
 
     public TweenSharp(object target, float duration, Dictionary<string, object> args) : base(duration)
     {
