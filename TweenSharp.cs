@@ -12,7 +12,6 @@ public class TweenSharp: TSTimeDef
     public Action<object> onUpdateArg = null;
     public object onUpdateParams = null;
     public bool reversed = false;
-    public bool suppressEvents = false;
     public TSEase.EaseFunction ease = Linear.EaseNone;
 
     private float position;
