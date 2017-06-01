@@ -7,6 +7,16 @@ I've used ActionScript / Flash for several years, and I'm moving to Unity / C# n
 ### Example
 You want move an object along x- and y-coordinates while fading alpha to 0 using a Quad ease? Ease over 5 seconds? Ease, just do this:
 
+	TweenSharp tween = new TweenSharp(gameObject, 5f, new
+	{
+		x  = 8f,
+		y = -5f,
+		alpha = 0f,
+		ease = Quad.EaseOut
+	} );
+
+	or
+	
 	TweenSharp tween = new TweenSharp(gameObject, 5f, new Dictionary<string, object>()
 	{
 		{"x", 8f},
