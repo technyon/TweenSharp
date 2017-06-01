@@ -9,7 +9,7 @@ You want move an object along x- and y-coordinates while fading alpha to 0 using
 
 	TweenSharp tween = new TweenSharp(gameObject, 5f, new
 	{
-		x  = 8f,
+		x = 8f,
 		y = -5f,
 		alpha = 0f,
 		ease = Quad.EaseOut
