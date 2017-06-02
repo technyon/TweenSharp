@@ -26,8 +26,7 @@ public class TweenSharp: TSTimeDef
     public TSEase.EaseFunction ease = Linear.EaseNone;
 
     public TweenSharp(object target, float duration, object args) : base(duration)
-    {
-		//Comment for test
+    {		
         this.target = target;
 
         InitVariables();
