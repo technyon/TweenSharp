@@ -27,6 +27,7 @@ public class TweenSharp: TSTimeDef
 
     public TweenSharp(object target, float duration, object args) : base(duration)
     {
+		//Comment for test
         this.target = target;
 
         InitVariables();
