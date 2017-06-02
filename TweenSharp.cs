@@ -183,7 +183,7 @@ public class TweenSharp: TSTimeDef
         return false;
     }
 
-    public static TweenSharp To(object target, float duration, Dictionary<string, object> args)
+    public static TweenSharp To(object target, float duration, object args)
     {
         return new TweenSharp(target, duration, args);
     }
