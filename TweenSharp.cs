@@ -12,6 +12,16 @@ public class TweenSharp: TSTimeDef
     public Action<object> onUpdateArg = null;
     public object onUpdateParams = null;
     public bool reversed = false;
+
+/*
+        , onCompleteScope:1,
+    useFrames:1, runBackwards:1, startAt:1, onUpdateScope:1,
+    onStart:1, onStartParams:1, onStartScope:1, onReverseComplete:1, onReverseCompleteParams:1, onReverseCompleteScope:1,
+    onRepeat:1, onRepeatParams:1, onRepeatScope:1, easeParams:1,
+    yoyo:1, onCompleteListener:1, onUpdateListener:1, onStartListener:1, onReverseCompleteListener:1, onRepeatListener:1,
+    orientToBezier:1, immediateRender:1, repeat:1, repeatDelay:1, data:1, paused:1, reversed:1};
+*/
+
     private float position;
     private Dictionary<string, float> properties;
 
@@ -26,29 +36,13 @@ public class TweenSharp: TSTimeDef
     public TSEase.EaseFunction ease = Linear.EaseNone;
 
     public TweenSharp(object target, float duration, object args) : base(duration)
-    {		
+    {
         this.target = target;
-
-        InitVariables();
-
-        foreach (PropertyInfo pi in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
-        {
-            string key = pi.Name;
-            object value = pi.GetValue(args, null);
-            if (!TSKeywordParser.Parse(this, new KeyValuePair<string, object>(key, value)))
-            {
-                ParseKeyValue(key, value);
-            }
-        }
-
-        PostInit();
+        Init((args as Dictionary<string, object>) ?? args.ToDictionary());
     }
 
-    public TweenSharp(object target, float duration, Dictionary<string, object> args) : base(duration)
+    private void Init(Dictionary<string, object> args)
     {
-        float f = 0;
-        this.target = target;
-
         InitVariables();
 
         foreach (KeyValuePair<string, object> kvp in args)
@@ -62,9 +56,32 @@ public class TweenSharp: TSTimeDef
             }
         }
 
-        PostInit();
-    }
+        PropertyInfo[] pis = target.GetType().GetProperties();
+        foreach (PropertyInfo pi in pis)
+        {
+            int ind = propertyNames.IndexOf(pi.Name);
+            if (ind != -1 && propertyPlugins[ind] == null)
+            {
+                object val = pi.GetValue(target, null);
+                if (val is float)
+                {
+                    propertyStartValues[ind] = (float)val;
+                }
+                propertyInfos[ind] = pi;
+            }
+        }
 
+        int len = propertyNames.Count;
+        for (int i = 0; i < len; i++)
+        {
+            if (propertyInfos[i] == null && propertyPlugins[i] == null)
+            {
+                throw new Exception("Tweensharp(): Property " + propertyNames[i] + " not found on object " + target + ".");
+            }
+        }
+
+        TSScheduler.Register(this);
+    }
 
     private void InitVariables()
     {
@@ -106,35 +123,6 @@ public class TweenSharp: TSTimeDef
             throw new Exception("Tweensharp: Value is not of type float.");
         }
     }    
-
-    private void PostInit()
-    {
-        PropertyInfo[] pis = target.GetType().GetProperties();
-        foreach (PropertyInfo pi in pis)
-        {
-            int ind = propertyNames.IndexOf(pi.Name);
-            if (ind != -1 && propertyPlugins[ind] == null)
-            {
-                object val = pi.GetValue(target, null);
-                if (val is float)
-                {
-                    propertyStartValues[ind] = (float)val;
-                }
-                propertyInfos[ind] = pi;
-            }
-        }
-
-        int len = propertyNames.Count;
-        for (int i = 0; i < len; i++)
-        {
-            if (propertyInfos[i] == null && propertyPlugins[i] == null)
-            {
-                throw new Exception("Tweensharp(): Property " + propertyNames[i] + " not found on object " + target + ".");
-            }
-        }
-
-        TSScheduler.Register(this);
-    }
 
     public void Restart()
     {
