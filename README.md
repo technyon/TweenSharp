@@ -5,7 +5,7 @@ Tween# (TweenSharp) is a tweening library for C# / Unity with an interface inspi
 I've used ActionScript / Flash for several years, and I'm moving to Unity / C# now. TweenMax is very ease to use and nice to work with, while still being very powerfull if needed. I've found the existing tweening libraries for C# tedious to work with ... they often require several lines of code where Tween# only needs one line. Which bring us to the next section:
 
 ### Example
-You want move an object along x- and y-coordinates while fading alpha to 0 using a Quad ease? Ease over 5 seconds? Easy, just use this code:
+You want move an object along x- and y-coordinates while fading alpha to 0 using a Quad Ease over 5 seconds? Easy, just use this code:
 
 	TweenSharp tween = new TweenSharp(gameObject, 5f, new
 	{
