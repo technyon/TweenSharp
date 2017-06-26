@@ -9,7 +9,6 @@ namespace TS
         private static TSScheduler instance;
 
         private List<TSTimeDef> tweens;
-        private List<TSTimeDef> removeList;
 
         public static void Register(TSTimeDef tweensharp, bool dupeCheck = false)
         {
@@ -26,7 +25,6 @@ namespace TS
 
         public static void KillAllDelayedCallsTo(Action callback)
         {
-            instance.removeList.Clear();
             foreach (TSTimeDef td in instance.tweens)
             {
                 if (td is DC)
@@ -40,7 +38,6 @@ namespace TS
         }
         public static void KillAllDelayedCallsTo(Action<object> callback)
         {
-            instance.removeList.Clear();
             foreach (TSTimeDef td in instance.tweens)
             {
                 if (td is DC)
@@ -60,7 +57,6 @@ namespace TS
                 instance = this;
                 tweens = new List<TSTimeDef>();
                 TSPluginManager.Init();
-                removeList = new List<TSTimeDef>();
 
                 TSKeywordParser.Init();
             }
@@ -68,18 +64,18 @@ namespace TS
 
         private void Update()
         {
-            removeList.Clear();
+            List<TSTimeDef> removeListUpdate = new List<TSTimeDef>();
 
             float time = Time.realtimeSinceStartup;
             foreach (TSTimeDef tween in tweens)
             {
                 if (tween.Update(time))
                 {
-                    removeList.Add(tween);
+                    removeListUpdate.Add(tween);
                 }
             }
 
-            foreach (TSTimeDef tween in removeList)
+            foreach (TSTimeDef tween in removeListUpdate)
             {
                 tweens.Remove(tween);
 
@@ -91,7 +87,6 @@ namespace TS
                 {
                     tween.onCompleteArg(tween.onCompleteParams);
                 }
-
             }
         }
     }
