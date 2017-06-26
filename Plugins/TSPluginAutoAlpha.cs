@@ -1,7 +1,4 @@
-﻿using System;
-using System.Xml.Schema;
-using NUnit.Framework.Constraints;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TS
 {
@@ -23,7 +20,7 @@ namespace TS
 
         public override float Value
         {
-            get { return renderer.material.color.a; }
+            get { return renderer[0].material.color.a; }
             set
             {
                 base.Value = value;

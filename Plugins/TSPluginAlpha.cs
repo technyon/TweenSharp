@@ -8,7 +8,7 @@ namespace TS
     {
         private readonly string PROPERTY_NAME = "alpha";
 
-        protected Renderer renderer;
+        protected Renderer[] renderer;
         protected Graphic[] graphics;
 
         private TSDelegates.TSGetVal getVal;
@@ -25,11 +25,11 @@ namespace TS
                 if (go != null) {
                     if (go.GetComponent<RectTransform>() == null)
                     {
-                        renderer = go.transform.GetComponent<Renderer>();
+                        renderer = go.GetComponentsInChildren<Renderer>();
                     }
                     else
                     {
-                        graphics = go.GetComponents<Graphic>();
+                        graphics = go.GetComponentsInChildren<Graphic>();
                     }
                 }
                 if (renderer == null && graphics == null)
@@ -37,7 +37,7 @@ namespace TS
                     Transform transform = value as Transform;
                     if (transform != null)
                     {
-                        renderer = transform.GetComponent<Renderer>();
+                        renderer = transform.GetComponentsInChildren<Renderer>();
                     }
                 }
                 if (renderer == null && graphics == null)
@@ -69,12 +69,18 @@ namespace TS
 
         private float GetValRenderer()
         {
-            return renderer.material.color.a;
+            if (renderer.Length > 0)
+            {
+                return renderer[0].material.color.a;
+            }
+            return 0;
         }
         private void SetValRenderer(float value)
         {
-            Material material = renderer.material;
-            material.color = new Vector4(material.color.r, material.color.g, material.color.b, value);
+            foreach (Renderer graphic in renderer)
+            {
+                graphic.material.color = new Color(graphic.material.color.r, graphic.material.color.g, graphic.material.color.b, value);
+            }
         }
 
         private float GetValGraphics()
