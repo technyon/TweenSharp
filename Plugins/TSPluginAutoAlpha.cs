@@ -20,7 +20,7 @@ namespace TS
 
         public override float Value
         {
-            get { return renderer[0].material.color.a; }
+            get { return base.Value; }
             set
             {
                 base.Value = value;
