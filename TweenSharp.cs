@@ -32,6 +32,7 @@ public class TweenSharp: TSTimeDef
         Init((args as Dictionary<string, object>) ?? args.ToDictionary());
     }
 
+    // -- Internal functions --
     private void Init(Dictionary<string, object> args)
     {
         InitVariables();
@@ -179,6 +180,7 @@ public class TweenSharp: TSTimeDef
         return new TweenSharp(target, duration, args);
     }
     
+    // -- Static functions --
     public static DC DelayedCall(float delay, Action callback)
     {
         DC dc = new DC(delay);
