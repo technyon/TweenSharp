@@ -3,13 +3,13 @@
 public class Bounce
 {
     public static TSEase.EaseFunction EaseIn = FEaseIn;
-    private static float FEaseIn(float t, float b, float c, float d)
+    private static float FEaseIn(float t, float b, float c, float d, object p = null)
     {
         return c - FEaseOut(d-t, 0, c, d) + b;
     }
 
     public static TSEase.EaseFunction EaseOut = FEaseOut;
-    private static float FEaseOut(float t, float b, float c, float d)
+    private static float FEaseOut(float t, float b, float c, float d, object p = null)
     {
         if ((t/=d) < (1f/2.75f)) {
             return c*(7.5625f*t*t) + b;
@@ -24,7 +24,7 @@ public class Bounce
 
     public static TSEase.EaseFunction EaseInOut = FEaseInOut;
 
-    private static float FEaseInOut(float t, float b, float c, float d)
+    private static float FEaseInOut(float t, float b, float c, float d, object p = null)
     {
         if (t < d / 2)
         {

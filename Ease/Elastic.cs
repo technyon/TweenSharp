@@ -4,10 +4,10 @@ using UnityEngine;
 public class Elastic
 {
     public static TSEase.EaseFunction EaseIn = FEaseIn;
-    private static float FEaseIn(float t, float b, float c, float d)
+    private static float FEaseIn(float t, float b, float c, float d, object p = null)
     {
         float s;
-        float p=0;
+        float r=0;
         float a=c;
         if (t == 0)
         {
@@ -18,28 +18,28 @@ public class Elastic
             return b+c;
         }
 
-        if (p == 0)
+        if (r == 0)
         {
-            p=d * 0.3f;
+            r=d * 0.3f;
         }
         if (a < Mathf.Abs(c))
         {
             a = c;
-            s = p / 4;
+            s = r / 4;
         }
         else
         {
-            s = p/(2*Mathf.PI) * Mathf.Asin(c/a);
+            s = r/(2*Mathf.PI) * Mathf.Asin(c/a);
         }
 
-        return -(a * Mathf.Pow(2f,10f*(t-=1)) * Mathf.Sin((t * d-s) * (2f * Mathf.PI) / p)) + b;
+        return -(a * Mathf.Pow(2f,10f*(t-=1)) * Mathf.Sin((t * d-s) * (2f * Mathf.PI) / r)) + b;
     }
 
     public static TSEase.EaseFunction EaseOut = FEaseOut;
-    private static float FEaseOut(float t, float b, float c, float d)
+    private static float FEaseOut(float t, float b, float c, float d, object p = null)
     {
         float s;
-        float p=0;
+        float r=0;
         float a=c;
 
         if (t == 0)
@@ -52,29 +52,29 @@ public class Elastic
         }
 
 
-        if (p == 0)
+        if (r == 0)
         {
-            p = d * 0.3f;
+            r = d * 0.3f;
         }
 
         if (a < Mathf.Abs(c))
         {
             a = c;
-            s = p / 4;
+            s = r / 4;
         }
         else
         {
-            s = p/(2f*Mathf.PI) * Mathf.Asin(c/a);
+            s = r/(2f*Mathf.PI) * Mathf.Asin(c/a);
         }
 
-        return a * Mathf.Pow(2f, -10f * t) * Mathf.Sin( (t * d-s) * (2f * Mathf.PI) / p ) + c + b;
+        return a * Mathf.Pow(2f, -10f * t) * Mathf.Sin( (t * d-s) * (2f * Mathf.PI) / r ) + c + b;
     }
 
     public static TSEase.EaseFunction EaseInOut = FEaseInOut;
-    private static float FEaseInOut(float t, float b, float c, float d)
+    private static float FEaseInOut(float t, float b, float c, float d, object p = null)
     {
         float s;
-        float p=0;
+        float r=0;
         float a=c;
 
         if (t == 0)
@@ -85,25 +85,25 @@ public class Elastic
         {
             return b+c;
         }
-        if (p == 0)
+        if (r == 0)
         {
-            p=d * (0.3f * 1.5f);
+            r=d * (0.3f * 1.5f);
         }
 
         if (a < Mathf.Abs(c))
         {
             a=c;
-            s=p/4;
+            s=r/4;
         }
         else
         {
-            s = p / (2*Mathf.PI) * Mathf.Asin (c/a);
+            s = r / (2*Mathf.PI) * Mathf.Asin (c/a);
         }
         if (t < 1)
         {
-            return -0.5f * (a * Mathf.Pow(2f,10f * (t-=1)) * Mathf.Sin((t * d-s) * (2f * Mathf.PI)/p )) + b;
+            return -0.5f * (a * Mathf.Pow(2f,10f * (t-=1)) * Mathf.Sin((t * d-s) * (2f * Mathf.PI)/r )) + b;
         }
-        return a * Mathf.Pow(2f, -10f * (t-=1)) * Mathf.Sin((t * d-s) * (2 * Mathf.PI) / p)*0.5f + c + b;
+        return a * Mathf.Pow(2f, -10f * (t-=1)) * Mathf.Sin((t * d-s) * (2 * Mathf.PI) / r)*0.5f + c + b;
 
     }
 }

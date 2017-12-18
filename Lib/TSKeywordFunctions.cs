@@ -18,6 +18,12 @@ namespace TS
             }
         }
 
+        public void EaseParams(TweenSharp tween, object args)
+        {
+            tween.easeParams = args;
+        }
+        
+        
         public void Delay(TweenSharp tween, object args)
         {
             tween.delay = (float) args;

@@ -20,6 +20,7 @@ namespace TS
             keywordTable["onUpdate"] = keywordFunctions.OnUpdate;
             keywordTable["onUpdateParams"] = keywordFunctions.OnUpdateParams;
             keywordTable["ease"] = keywordFunctions.Ease;
+            keywordTable["easeParams"] = keywordFunctions.EaseParams;
         }
 
 

@@ -3,14 +3,14 @@
 public class Quad
 {
     public static TSEase.EaseFunction EaseIn = FEaseIn;
-    private static float FEaseIn(float t, float b, float c, float d)
+    private static float FEaseIn(float t, float b, float c, float d, object p = null)
     {
         t /= d;
         return c*t*t + b;
     }
 
     public static TSEase.EaseFunction EaseOut = FEaseOut;
-    private static float FEaseOut(float t, float b, float c, float d)
+    private static float FEaseOut(float t, float b, float c, float d, object p = null)
     {
         t /= d;
         t--;
@@ -18,7 +18,7 @@ public class Quad
     }
 
     public static TSEase.EaseFunction EaseInOut = FEaseInOut;
-    private static float FEaseInOut(float t, float b, float c, float d)
+    private static float FEaseInOut(float t, float b, float c, float d, object p = null)
     {
 
         t /= d/2;

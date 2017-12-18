@@ -25,6 +25,7 @@ public class TweenSharp: TSTimeDef
     private List<PropertyInfo> propertyInfos;
 
     public TSEase.EaseFunction ease = Linear.EaseNone;
+    public object easeParams = null;
 
     public TweenSharp(object target, float duration, object args) : base(duration)
     {
@@ -160,11 +161,11 @@ public class TweenSharp: TSTimeDef
                 if (plugin == null)
                 {
                     PropertyInfo pi = propertyInfos[i];
-                    pi.SetValue(target, ease(timePassed, startVal, targetVal - startVal, duration), null);
+                    pi.SetValue(target, ease(timePassed, startVal, targetVal - startVal, duration, easeParams), null);
                 }
                 else
                 {
-                    plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration);
+                    plugin.Value = ease(timePassed, startVal, targetVal - startVal, duration, easeParams);
                 }
 
                 if (onUpdate != null && !suppressEvents) { onUpdate(); }
