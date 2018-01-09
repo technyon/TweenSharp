@@ -12,7 +12,9 @@ namespace TS
         }
         protected override void SetValTransform(float value)
         {
-            transform.position = new Vector3(transform.position.x, value, transform.position.z);
+            Vector3 pos = transform.localPosition;
+            pos.y = value;
+            transform.position = pos;
         }
         protected override float GetValRectTransform()
         {
@@ -20,7 +22,12 @@ namespace TS
         }
         protected override void SetValRectTransform(float value)
         {
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, value);
+            if (rectTransform != null)
+            {
+                Vector2 pos = rectTransform.anchoredPosition;
+                pos.y = value;
+                rectTransform.anchoredPosition = pos;
+            }
         }
 
         public override string PropertyName

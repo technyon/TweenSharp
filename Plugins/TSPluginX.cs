@@ -12,16 +12,18 @@ namespace TS
         }
         protected override void SetValTransform(float value)
         {
-            transform.position = new Vector3(value, transform.position.y, transform.position.z);
-        }
+            Vector3 pos = transform.localPosition;
+            pos.x = value;
+            transform.position = pos;        }
         protected override float GetValRectTransform()
         {
             return rectTransform.anchoredPosition.x;
         }
         protected override void SetValRectTransform(float value)
         {
-            rectTransform.anchoredPosition = new Vector2(value, rectTransform.anchoredPosition.y);
-        }
+            Vector2 pos = rectTransform.anchoredPosition;
+            pos.x = value;
+            rectTransform.anchoredPosition = pos;        }
 
         public override string PropertyName
         {
