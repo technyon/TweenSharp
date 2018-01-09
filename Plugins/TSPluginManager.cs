@@ -13,13 +13,20 @@ namespace TS
             typeof(TSPluginRotationX),
             typeof(TSPluginRotationY),
             typeof(TSPluginRotationZ),
+            typeof(TSPluginScale),
             typeof(TSPluginScaleX),
             typeof(TSPluginScaleY),
             typeof(TSPluginScaleZ),
             typeof(TSPluginSizeDeltaX),
             typeof(TSPluginSizeDeltaY),
+            typeof(TSPluginPositionX),
+            typeof(TSPluginPositionY),
+            typeof(TSPluginPositionZ),
             typeof(TSPluginAlpha),
-            typeof(TSPluginAutoAlpha)
+            typeof(TSPluginAutoAlpha),
+            typeof(TSPluginLocalX),
+            typeof(TSPluginLocalY),
+            typeof(TSPluginLocalZ),
         };
         private static Dictionary<string, Type> plugins;
 

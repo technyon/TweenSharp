@@ -23,7 +23,8 @@ namespace TS
         {
             Vector2 pos = rectTransform.anchoredPosition;
             pos.x = value;
-            rectTransform.anchoredPosition = pos;        }
+            rectTransform.anchoredPosition = pos;
+        }
 
         public override string PropertyName
         {
