@@ -9,7 +9,7 @@ namespace TS
         public override float Value
         {
             get { return rectTransform.sizeDelta.y; }
-            set { rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, value); }
+            set { rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.y, value); }
         }
 
         public override string PropertyName
