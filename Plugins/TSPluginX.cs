@@ -14,7 +14,7 @@ namespace TS
         {
             Vector3 pos = transform.localPosition;
             pos.x = value;
-            transform.position = pos;        }
+            transform.localPosition = pos;        }
         protected override float GetValRectTransform()
         {
             return rectTransform.anchoredPosition.x;
