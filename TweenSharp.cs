@@ -7,7 +7,6 @@ using UnityEngine;
 public class TweenSharp: TSTimeDef
 {
     public float delay = 0;
-    public int overwrite = 0;
     public Action onUpdate = null;
     public Action<object> onUpdateArg = null;
     public object onUpdateParams = null;
@@ -97,21 +96,27 @@ public class TweenSharp: TSTimeDef
         }
         propertyPlugins.Add(plugin);
 
-        if (value is float)
+        TSTweenParams parameters = value as TSTweenParams;
+        if (plugin != null)
         {
-            if (plugin != null)
-            {
-                propertyStartValues.Add(plugin.Value);
-            }
-            else
-            {
-                propertyStartValues.Add(0f);
-            }
-            propertyTargetValues.Add((float)value);
+            propertyStartValues.Add(plugin.Value);
+            plugin.parameters = parameters;
         }
         else
         {
             propertyStartValues.Add(0f);
+        }
+
+        if (value is float)
+        {
+            propertyTargetValues.Add((float)value);
+        }
+        else if (parameters != null)
+        {
+            propertyTargetValues.Add(parameters.Value);
+        } 
+        else
+        {
             propertyTargetValues.Add(0f);
             throw new Exception("Tweensharp: Value is not of type float.");
         }
@@ -204,10 +209,5 @@ public class TweenSharp: TSTimeDef
     public static void KillAllDelayedCallsTo(Action<object> callback)
     {
         TSScheduler.KillAllDelayedCallsTo(callback);
-    }
-    
-    public static void Activate(Type pluginType)
-    {
-        TSPluginManager.Activate(pluginType);
     }
 }

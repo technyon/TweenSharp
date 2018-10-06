@@ -4,8 +4,10 @@ namespace TS
 {
     public class TSPlugin
     {
+        public TSTweenParams parameters;
+        
         private object target;
-
+        
         public TSPlugin()
         {
         }
