@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TS
 {
-    public class TSTimeDef
+    public abstract class TSTimeDef
     {
         protected float duration;
         protected float startTime;
