@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,31 +9,42 @@ namespace TS
     {
         private readonly string PROPERTY_NAME = "alpha";
 
+        protected CanvasGroup canvasGroup;
         protected Renderer[] renderer;
         protected Graphic[] graphics;
+        protected TMP_Text[] texts;
+        
 
-        private TSDelegates.TSGetVal getVal;
-        private TSDelegates.TSSetVal setVal;
+        protected TSDelegates.TSGetVal getVal;
+        protected TSDelegates.TSSetVal setVal;
 
         public override object Target
         {
             get { return base.Target; }
             set
             {
+                
                 base.Target = value;
                 GameObject go = value as GameObject;
 
-                if (go != null) {
-                    if (go.GetComponent<RectTransform>() == null)
+                if (go != null)
+                {
+                    canvasGroup = go.GetComponent<CanvasGroup>();
+
+                    if (canvasGroup == null)
                     {
-                        renderer = go.GetComponentsInChildren<Renderer>();
-                    }
-                    else
-                    {
-                        graphics = go.GetComponentsInChildren<Graphic>();
+                        if (go.GetComponent<RectTransform>() == null)
+                        {
+                            renderer = go.GetComponentsInChildren<Renderer>();
+                        }
+                        else
+                        {
+                            graphics = go.GetComponentsInChildren<Graphic>();
+                        }
+                        texts = go.GetComponentsInChildren<TMP_Text>();
                     }
                 }
-                if (renderer == null && graphics == null)
+                if (canvasGroup == null && renderer == null && graphics == null)
                 {
                     Transform transform = value as Transform;
                     if (transform != null)
@@ -40,10 +52,11 @@ namespace TS
                         renderer = transform.GetComponentsInChildren<Renderer>();
                     }
                 }
-                if (renderer == null && graphics == null)
+                if (canvasGroup == null && renderer == null && graphics == null)
                 {
-                    throw new Exception("TweenSharp: Can't tween alpha of object " + value);
+                    throw new Exception("TweenSharp: Can't tween alpha of object " + value + ". No suitable components found.");
                 }
+                
                 if (renderer != null)
                 {
                     getVal = GetValRenderer;
@@ -52,6 +65,10 @@ namespace TS
                 {
                     getVal = GetValGraphics;
                     setVal = SetValGraphics;
+                } else if (canvasGroup != null)
+                {
+                    getVal = GetValCanvasGroup;
+                    setVal = SetValCanvasGroup;
                 }
             }
         }
@@ -79,7 +96,15 @@ namespace TS
         {
             foreach (Renderer graphic in renderer)
             {
-                graphic.material.color = new Color(graphic.material.color.r, graphic.material.color.g, graphic.material.color.b, value);
+                Color c = graphic.material.color;
+                c.a = value;
+                graphic.material.color = c;
+            }
+            foreach (TMP_Text text in texts)
+            {
+                Color c = text.color;
+                c.a = value;
+                text.color = c;
             }
         }
 
@@ -95,8 +120,25 @@ namespace TS
         {
             foreach (Graphic graphic in graphics)
             {
-                graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, value);
+                Color c = graphic.color;
+                c.a = value;
+                graphic.color = c;
             }
+            foreach (TMP_Text text in texts)
+            {
+                Color c = text.color;
+                c.a = value;
+                text.color = c;
+            }
+        }
+        
+        private float GetValCanvasGroup()
+        {
+            return canvasGroup.alpha;
+        }
+        private void SetValCanvasGroup(float value)
+        {
+            canvasGroup.alpha = value;
         }
     }
 }
