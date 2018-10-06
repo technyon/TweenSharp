@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace TS
+﻿namespace TS
 {
     public class TSEase
     {
