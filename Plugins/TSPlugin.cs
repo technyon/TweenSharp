@@ -2,7 +2,7 @@
 
 namespace TS
 {
-    public class TSPlugin
+    public abstract class TSPlugin
     {
         public TSTweenParams parameters;
         
