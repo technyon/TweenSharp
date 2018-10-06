@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace TS
 {
@@ -26,7 +27,14 @@ namespace TS
         
         public void Delay(TweenSharp tween, object args)
         {
-            tween.delay = (float) args;
+            if (tween.UseFrames)
+            {
+                tween.delay = (float) args / (float)Screen.currentResolution.refreshRate;
+            }
+            else
+            {
+                tween.delay = (float) args;
+            }
         }
 
         public void OnComplete(TweenSharp tween, object args)

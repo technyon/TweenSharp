@@ -27,7 +27,7 @@ public class TweenSharp: TSTimeDef
     public TSEase.EaseFunction ease = Linear.EaseNone;
     public object easeParams = null;
 
-    public TweenSharp(object target, float duration, object args) : base(duration)
+    public TweenSharp(object target, float duration, object args, bool useFrames = false) : base(duration, useFrames)
     {
         this.target = target;
         Init((args as Dictionary<string, object>) ?? args.ToDictionary());
@@ -176,22 +176,22 @@ public class TweenSharp: TSTimeDef
         return false;
     }
 
-    public static TweenSharp To(object target, float duration, object args)
+    public static TweenSharp To(object target, float duration, object args, bool useFrames = false)
     {
-        return new TweenSharp(target, duration, args);
+        return new TweenSharp(target, duration, args, useFrames);
     }
     
     // -- Static functions --
-    public static DC DelayedCall(float delay, Action callback)
+    public static DC DelayedCall(float delay, Action callback, bool useFrames = false)
     {
-        DC dc = new DC(delay);
+        DC dc = new DC(delay, useFrames);
         dc.onComplete = callback;
         TSScheduler.Register(dc);
         return dc;
     }
-    public static DC DelayedCall(float delay, Action<object> callback, object pars)
+    public static DC DelayedCall(float delay, Action<object> callback, object pars, bool useFrames = false)
     {
-        DC dc = new DC(delay);
+        DC dc = new DC(delay, useFrames);
         dc.onCompleteArg = callback;
         dc.onCompleteParams = pars;
         TSScheduler.Register(dc);

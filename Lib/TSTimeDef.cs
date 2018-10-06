@@ -14,6 +14,7 @@ namespace TS
         public bool suppressEvents = false;
         
         private float pausedTime;
+        private bool useFrames;
 
         public float Progress
         {
@@ -53,11 +54,23 @@ namespace TS
             }
         }
 
-        public TSTimeDef(float duration)
+        public bool UseFrames
+        {
+            get { return useFrames; }
+        }
+
+        public TSTimeDef(float duration, bool useFrames = false)
         {
             startTime = Time.realtimeSinceStartup;
-            this.duration = duration;
-        }
+            this.useFrames = useFrames;
+            if (useFrames)
+            {
+                this.duration = duration / (float)Screen.currentResolution.refreshRate;
+            }
+            else
+            {
+                this.duration = duration;
+            }        }
 
         public void Kill()
         {
