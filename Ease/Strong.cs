@@ -1,6 +1,6 @@
 ﻿using TS;
 
-public class Strong
+public static class Strong
 {
     public static TSEase.EaseFunction EaseOut = Quart.EaseOut;
     public static TSEase.EaseFunction EaseIn = Quart.EaseIn;

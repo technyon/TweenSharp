@@ -1,6 +1,6 @@
 ﻿using TS;
 
-public class Quart
+public static class Quart
 {
     public static TSEase.EaseFunction EaseIn = FEaseIn;
     private static float FEaseIn(float t, float b, float c, float d, object p = null)

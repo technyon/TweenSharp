@@ -1,6 +1,6 @@
 ﻿using TS;
 
-public class Regular
+public static class Regular
 {
     public static TSEase.EaseFunction EaseOut = Quad.EaseOut;
     public static TSEase.EaseFunction EaseIn = Quad.EaseIn;

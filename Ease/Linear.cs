@@ -1,6 +1,6 @@
 ﻿using TS;
 
-public class Linear
+public static class Linear
 {
     public static TSEase.EaseFunction EaseNone = FEase;
     public static TSEase.EaseFunction EaseIn = FEase;
