@@ -7,6 +7,7 @@ namespace TS
     public class TSScheduler : MonoBehaviour
     {
         private static TSScheduler instance;
+        private static TSSettings settings;
 
         private List<TSTimeDef> tweens;
 
@@ -50,7 +51,29 @@ namespace TS
             }
         }
         
-        void Awake()
+        [RuntimeInitializeOnLoadMethod(loadType: RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void InitializeOnLoad() {
+            if (Settings.InstantiateOnLoad)
+            {
+                GameObject gameObject = new GameObject("TweenSharp");
+                gameObject.AddComponent<TSScheduler>();
+            }
+        }
+
+        private static TSSettings Settings
+        {
+            get
+            {
+                if (settings == null)
+                {
+                    settings = Resources.Load<TSSettings>("TSSettings");
+                }
+
+                return settings;
+            }
+        }
+        
+        private void Awake()
         {
             if (instance == null)
             {
@@ -59,6 +82,10 @@ namespace TS
                 TSPluginManager.Init();
 
                 TSKeywordParser.Init();
+            }
+            else
+            {
+                throw new Exception("TSScheduler is a singleton, but instatiated twice. Make sure only one copy exists, and consider disabling InstantiateOnLoad in TweenSharp settings.");
             }
         }
 

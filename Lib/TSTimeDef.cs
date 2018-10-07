@@ -27,7 +27,7 @@ namespace TS
                 }
                 return (now - startTime) / duration ;
             }
-            set { 
+            set {
                 float now = Time.realtimeSinceStartup;
                 startTime = now - value * duration;
                 Update(now);
