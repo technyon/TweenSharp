@@ -27,4 +27,4 @@ Tween# of course supports many more features:
 - Use "DelayedCall" for delayed execution of methods.
 
 ### How to Use
-Just download with git or as a ZIP and included all files in your project. Add TSScheduler.cs to any GameObject in the scene and you're all setup.
+Just download the sources and put them into your Assets directory in your project.
