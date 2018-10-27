@@ -32,6 +32,18 @@ public class TweenSharp: TSTimeDef
         Init((args as Dictionary<string, object>) ?? args.ToDictionary());
     }
 
+    
+    public void Restart()
+    {
+        startTime = Time.realtimeSinceStartup;
+        TSScheduler.Register(this, true);
+    }
+
+    public bool HasTarget(object target)
+    {
+        return this.target == target;
+    }
+    
     // -- Internal functions --
     private void Init(Dictionary<string, object> args)
     {
@@ -121,12 +133,6 @@ public class TweenSharp: TSTimeDef
             throw new Exception("Tweensharp: Value is not of type float.");
         }
     }    
-
-    public void Restart()
-    {
-        startTime = Time.realtimeSinceStartup;
-        TSScheduler.Register(this, true);
-    }
     
     public override bool Update(float time)
     {
@@ -181,11 +187,21 @@ public class TweenSharp: TSTimeDef
         return false;
     }
 
+    #region StaticMethods
     public static TweenSharp To(object target, float duration, object args, bool useFrames = false)
     {
         return new TweenSharp(target, duration, args, useFrames);
     }
+
+    public static void KillTweensOf(object target)
+    {
+        TSScheduler.KillTweensOf(target);
+    }
+    #endregion StaticMethods
+
     
+    #region DelayCallMethods
+
     // -- Static functions --
     public static DC DelayedCall(float delay, Action callback, bool useFrames = false)
     {
@@ -210,4 +226,8 @@ public class TweenSharp: TSTimeDef
     {
         TSScheduler.KillAllDelayedCallsTo(callback);
     }
+
+    
+    #endregion DelayCallMethods
+
 }

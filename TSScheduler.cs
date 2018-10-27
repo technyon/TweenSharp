@@ -24,6 +24,25 @@ namespace TS
             instance.tweens.Remove(tween);
         }
 
+        public static void KillTweensOf(object target)
+        {
+            List<TweenSharp> toBeUnregistered = new List<TweenSharp>();
+            foreach (TSTimeDef td in instance.tweens)
+            {
+                TweenSharp tweenSharp = td as TweenSharp;
+                if (tweenSharp != null && tweenSharp.HasTarget(target))
+                {
+                    toBeUnregistered.Add(tweenSharp);
+                }
+            }
+            
+            foreach (TweenSharp tweenSharp in toBeUnregistered)
+            {
+                Unregister(tweenSharp);
+            }
+        }
+        
+        #region DelayCallMethods
         public static void KillAllDelayedCallsTo(Action callback)
         {
             foreach (TSTimeDef td in instance.tweens)
@@ -50,7 +69,8 @@ namespace TS
                 }
             }
         }
-        
+        #endregion DelayCallMethods
+ 
         [RuntimeInitializeOnLoadMethod(loadType: RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void InitializeOnLoad() {
             if (Settings.InstantiateOnLoad)
