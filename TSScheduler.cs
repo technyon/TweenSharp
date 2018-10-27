@@ -137,5 +137,11 @@ namespace TS
                 }
             }
         }
+
+        private void OnDestroy()
+        {
+            tweens.Clear();
+            instance = null;
+        }
     }
 }
