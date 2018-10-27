@@ -77,6 +77,7 @@ namespace TS
             {
                 GameObject gameObject = new GameObject("TweenSharp");
                 gameObject.AddComponent<TSScheduler>();
+                DontDestroyOnLoad(gameObject);
             }
         }
 
